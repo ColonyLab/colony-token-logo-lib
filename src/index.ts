@@ -1,4 +1,4 @@
-export { Uuid } from './helpers/uuid';
-import uuid from './helpers/uuid';
+export { ColonyTokenLogo } from './ColonyTokenLogo'
+import ColonyTokenLogo from './ColonyTokenLogo'
 
-export default uuid;
+export default ColonyTokenLogo

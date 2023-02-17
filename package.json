@@ -1,7 +1,7 @@
 {
-  "name": "ts-npm-package-boilerplate",
-  "version": "0.2.1",
-  "description": "TypeScript NPM Module Boilerplate",
+  "name": "colony-token-logo-lib",
+  "version": "0.0.1",
+  "description": "Colony Tokens Logo Library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -18,18 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hebertcisco/ts-npm-package-boilerplate.git"
+    "url": "git+https://github.com/ColonyLab/colony-token-logo-lib.git"
   },
-  "keywords": [
-    "boilerplate",
-    "typescript"
-  ],
-  "author": "Hebert Cisco",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hebertcisco/ts-npm-package-boilerplate/issues"
-  },
-  "homepage": "https://github.com/hebertcisco/ts-npm-package-boilerplate#readme",
   "devDependencies": {
     "@types/jest": "29.2.4",
     "@typescript-eslint/eslint-plugin": "5.46.0",

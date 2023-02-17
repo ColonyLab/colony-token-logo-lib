@@ -1,13 +1,9 @@
-import uuid from '../index';
+import ColonyTokenLogo, { Networks } from '../ColonyTokenLogo'
+describe('Test 1', () => {
 
-describe('valid UUID', () => {
-  let VALID_UUID_REGEX: RegExp;
+  test('sample test', async () => {
+    // const lib = new ColonyTokenLogo('https://graph.colonylab.io/subgraphs/name/colony/fuji-develop', Networks.avalanche)
+    // expect(await lib.getLogo('0x22d4002028f537599bE9f666d1c4Fa138522f9c8')).toEqual('')
+  })
 
-  beforeAll(() => {
-    VALID_UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  });
-
-  test('should match a valid UUID', () => {
-    expect(VALID_UUID_REGEX.test(uuid.v4())).toBeTruthy();
-  });
-});
+})
