@@ -21,6 +21,7 @@ export class ColonyTokenLogo {
     }
 
     public async getLogo(tokenAddress: string): Promise<string> {
+        tokenAddress = tokenAddress.toLocaleLowerCase()
         let logoUrl = this.logoUrlCache.get(tokenAddress)
 
         if(logoUrl === undefined){
