@@ -1,5 +1,5 @@
+import axios from "axios"
 import SubgraphQueries from "./helpers/SubgraphQueries"
-import axios from 'axios'
 
 export enum Networks {
     avalanche, fuji
@@ -7,13 +7,18 @@ export enum Networks {
 
 export class ColonyTokenLogo {
 
-    readonly s3Url = 'https://colony-assets.s3.eu-central-1.amazonaws.com/'
-    readonly ipfsUrl = 'https://ipfs.colonylab.io/ipfs/'
+    readonly avalancheLogoUrl = 'https://raw.githubusercontent.com/ColonyLab/colony-token-logo-lib/master/data/avalancheLogo.json'
+    readonly fujiLogoUrl = 'https://raw.githubusercontent.com/ColonyLab/colony-token-logo-lib/master/data/fujiLogo.json'
+    readonly ipfsUrl = 'https://ipfs.colonylab.io/ipfs'
+    readonly noLogoUrl = 'https://colony-assets.s3.eu-central-1.amazonaws.com/nologo.png'
+    readonly cacheLifetime = 1800000 // 30min
 
     private colonySubgraphUrl: string
     private network: Networks
 
-    private logoUrlCache = new Map<string, string>()
+    private staticLogoCache = new Map<string, string>()
+    private ipfsLogoCache = new Map<string, string>()
+    private cacheLastRefresh = 0
 
     constructor (_colonySubgraphUrl: string, _network: Networks) {
         this.colonySubgraphUrl = _colonySubgraphUrl
@@ -21,64 +26,58 @@ export class ColonyTokenLogo {
     }
 
     public async getLogo(tokenAddress: string): Promise<string> {
+        await this.refreshCacheIfNeeded()
+
         tokenAddress = tokenAddress.toLocaleLowerCase()
-        let logoUrl = this.logoUrlCache.get(tokenAddress)
 
-        if(logoUrl === undefined){
-            logoUrl = await this.findLogoUrl(tokenAddress)
-            this.logoUrlCache.set(tokenAddress, logoUrl)
+        let logoUrl = this.staticLogoCache.get(tokenAddress)
+        if(logoUrl !== undefined){
+            return logoUrl
         }
 
-        return logoUrl
+        logoUrl = this.ipfsLogoCache.get(tokenAddress)
+        if(logoUrl !== undefined){
+            return logoUrl
+        }
+
+        return this.noLogoUrl
     }
 
-    private async findLogoUrl(tokenAddress: string): Promise<string> {
-        const ceTokenIpfsId = await this.getCeTokenLogoIpfsId(tokenAddress)
-        if(ceTokenIpfsId !== null) {
-           return this.ipfsUrl + ceTokenIpfsId
+    private async refreshCacheIfNeeded(): Promise<void> {
+        if(this.cacheLastRefresh + this.cacheLifetime < Date.now()){
+            await this.loadCeTokensLogoList()
+            await this.loadStaticLogoList()
+            this.cacheLastRefresh = Date.now()
         }
-
-        const s3LogoFileExists = await this.checkS3LogoFileExists(tokenAddress)
-        if(s3LogoFileExists === true) {
-            return this.s3Url + Networks[this.network] + '/' + tokenAddress + '.png'
-        }
-
-        return this.s3Url + 'nologo.png'
     }
 
-    private async getCeTokenLogoIpfsId(tokenAddress: string): Promise<string | null> {
+    private async loadCeTokensLogoList(): Promise<void> {
         const response = await SubgraphQueries.requestGraph(this.colonySubgraphUrl, `{
-            erc20Tokens(where:{id: "${tokenAddress}"}){
-              earlyStageCeToken{
-                logo
+            projects(where: {ceToken_not: null}) {
+              ceToken {
+                id
               }
+              logo
             }
           }`)
 
-        const results = await response.data.data.erc20Tokens
-        if(results.length > 0){
-            if(results[0].earlyStageCeToken.length > 0){
-                return results[0].earlyStageCeToken[0].logo
-            }
-            else{
-                return null
-            }
-        }
-        else{
-            return null
+        const results = await response.data.data.projects
+
+        this.ipfsLogoCache.clear()
+        for(const element of results){
+            this.ipfsLogoCache.set(element.ceToken.id.toLowerCase(), `${this.ipfsUrl}/${element.logo}`)
         }
     }
 
-    private async checkS3LogoFileExists(tokenAddress: string): Promise<boolean> {
-        try{
-            const response = await axios({
-                method: 'get',
-                url: this.s3Url + Networks[this.network] + '/' + tokenAddress + '.png'
-            })
-            return response.status === 200
-        }
-        catch(e){
-            return false
+    private async loadStaticLogoList(): Promise<void> {
+        const response = await axios({
+            method: 'get',
+            url: this.network === Networks.avalanche ? this.avalancheLogoUrl : this.fujiLogoUrl
+        })
+
+        this.staticLogoCache.clear()
+        for(const address in response.data){
+            this.staticLogoCache.set(address.toLowerCase(), response.data[address])
         }
     }
 }
