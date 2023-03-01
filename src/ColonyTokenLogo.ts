@@ -18,11 +18,17 @@ export class ColonyTokenLogo {
 
     private staticLogoCache = new Map<string, string>()
     private ipfsLogoCache = new Map<string, string>()
-    private cacheLastRefresh = 0
+    private refreshPromise: Promise<[void, void]>
+    private cacheLastRefresh: number
 
-    constructor (_colonySubgraphUrl: string, _network: Networks) {
+    constructor(_colonySubgraphUrl: string, _network: Networks) {
         this.colonySubgraphUrl = _colonySubgraphUrl
         this.network = _network
+        this.refreshPromise = Promise.all([
+            this.loadCeTokensLogoList(),
+            this.loadStaticLogoList()
+        ])
+        this.cacheLastRefresh = Date.now()
     }
 
     public async getLogo(tokenAddress: string): Promise<string> {
@@ -31,12 +37,12 @@ export class ColonyTokenLogo {
         tokenAddress = tokenAddress.toLocaleLowerCase()
 
         let logoUrl = this.staticLogoCache.get(tokenAddress)
-        if(logoUrl !== undefined){
+        if (logoUrl !== undefined) {
             return logoUrl
         }
 
         logoUrl = this.ipfsLogoCache.get(tokenAddress)
-        if(logoUrl !== undefined){
+        if (logoUrl !== undefined) {
             return logoUrl
         }
 
@@ -44,9 +50,12 @@ export class ColonyTokenLogo {
     }
 
     private async refreshCacheIfNeeded(): Promise<void> {
-        if(this.cacheLastRefresh + this.cacheLifetime < Date.now()){
-            await this.loadCeTokensLogoList()
-            await this.loadStaticLogoList()
+        await this.refreshPromise
+        if (this.cacheLastRefresh + this.cacheLifetime < Date.now()) {
+            this.refreshPromise = Promise.all([
+                this.loadCeTokensLogoList(),
+                this.loadStaticLogoList()
+            ])
             this.cacheLastRefresh = Date.now()
         }
     }
@@ -64,7 +73,7 @@ export class ColonyTokenLogo {
         const results = await response.data.data.projects
 
         this.ipfsLogoCache.clear()
-        for(const element of results){
+        for (const element of results) {
             this.ipfsLogoCache.set(element.ceToken.id.toLowerCase(), `${this.ipfsUrl}/${element.logo}`)
         }
     }
@@ -76,7 +85,7 @@ export class ColonyTokenLogo {
         })
 
         this.staticLogoCache.clear()
-        for(const address in response.data){
+        for (const address in response.data) {
             this.staticLogoCache.set(address.toLowerCase(), response.data[address])
         }
     }
