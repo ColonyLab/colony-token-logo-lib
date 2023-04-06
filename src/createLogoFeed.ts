@@ -31,7 +31,7 @@ async function main (): Promise<void> {
             if(fileData?.length != 2){
                 continue
             }
-            if(!['png', 'jpg'].includes(fileData[1].toLowerCase())){
+            if(!['png', 'jpg', 'svg'].includes(fileData[1].toLowerCase())){
                 continue
             }
             if(fileData[0].length !== 42){
