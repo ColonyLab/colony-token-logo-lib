@@ -11,8 +11,8 @@ interface LogoData {
 }
 
 async function main (): Promise<void> {
-    const outputAvalanche: LogoData = {}
-    const outputFuji: LogoData = {}
+    const outputAvalanche: LogoData = JSON.parse(fs.readFileSync('data/avalancheLogo.json', 'utf8'))
+    const outputFuji: LogoData = JSON.parse(fs.readFileSync('data/fujiLogo.json', 'utf8'))
 
     const s3Client = new S3Client({ region: BUCKET_REGION })
     const data = await s3Client.send(new ListObjectsCommand({ Bucket: BUCKET_NAME }))
