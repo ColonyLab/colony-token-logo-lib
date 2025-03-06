@@ -196,7 +196,7 @@
   "0xb57b25851fe2311cc3fe511c8f10e868932e0680": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0xB57B25851fE2311CC3fE511c8F10E868932e0680/logo.png",
   "0xe46b44179db3af934da552b35ff8869e98dc6af5": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0xE46b44179DB3AF934da552B35FF8869E98DC6Af5/logo.png",
   "0xb36faf341c7817d681f23bcedbd3d85467e5ad9f": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0xb36FAF341c7817D681F23BceDbd3d85467E5aD9F/logo.png",
-  "0x2d0afed89a6d6a100273db377dba7a32c739e314": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x2d0aFed89a6D6A100273Db377dBA7a32C739E314/logo.png",
+  "0x2d0afed89a6d6a100273db377dba7a32c739e314": "https://colony-assets.s3.eu-central-1.amazonaws.com/avalanche/0x2d0afed89a6d6a100273db377dba7a32c739e314.png",
   "0x5b08fee76c6b1d4f5fab98fc41a242b51cb090df": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x5B08fEE76c6b1D4F5faB98FC41a242B51cb090df/logo.png",
   "0x2dc45b5377739aa47e1162f42ca591c1688bc647": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x2dC45B5377739aa47E1162F42ca591c1688BC647/logo.png",
   "0xd036414fa2bcbb802691491e323bff1348c5f4ba": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0xD036414fa2BCBb802691491E323BFf1348C5F4Ba/logo.png",
@@ -225,5 +225,8 @@
   "0xe684f692bdf5b3b0db7e8e31a276de8a2e9f0025": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0xe684F692bdf5B3B0DB7E8e31a276DE8A2E9F0025/logo.png",
   "0x1c7c53aa86b49a28c627b6450091998e447a42f9": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x1c7c53aa86B49A28C627B6450091998e447A42f9/logo.png",
   "0x73831e7c5577859fb0583af97c9c68f96a43fcb6": "https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x73831E7c5577859FB0583aF97C9C68F96A43fcB6/logo.png",
-  "0x7a842193d291840fc38b45f991c5b8cc908f8a7c": "https://colony-assets.s3.eu-central-1.amazonaws.com/avalanche/0x7a842193d291840fc38b45f991c5b8cc908f8a7c.png"
+  "0x7a842193d291840fc38b45f991c5b8cc908f8a7c": "https://colony-assets.s3.eu-central-1.amazonaws.com/avalanche/0x7a842193d291840fc38b45f991c5b8cc908f8a7c.png",
+  "0x0f669808d88b2b0b3d23214dcd2a1cc6a8b1b5cd": "https://colony-assets.s3.eu-central-1.amazonaws.com/avalanche/0x0f669808d88b2b0b3d23214dcd2a1cc6a8b1b5cd.png",
+  "0x7698a5311da174a95253ce86c21ca7272b9b05f8": "https://colony-assets.s3.eu-central-1.amazonaws.com/avalanche/0x7698a5311da174a95253ce86c21ca7272b9b05f8.png",
+  "0x885c3a3a4998f0b5ac367a46217e68a200737a32": "https://colony-assets.s3.eu-central-1.amazonaws.com/avalanche/0x885c3a3a4998f0b5ac367a46217e68a200737a32.png"
 }
